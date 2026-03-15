@@ -3,386 +3,522 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="HamriMed – nakładki Maymom kompatybilne z Medela i Spectra. Wsparcie konsultantki laktacyjnej. Najwyższa jakość dla karmiących mam w Polsce." />
+  <meta name="description" content="HamriMed – nakładki Maymom kompatybilne z Medela i Spectra. Wsparcie konsultantki laktacyjnej, aplikacja dla położnych. Najwyższa jakość dla karmiących mam w Polsce." />
   <title>HamriMed – Nakładki Maymom | Wsparcie w karmieniu piersią</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- Custom cursor -->
-  <div class="c-cursor" id="cursor"></div>
-  <div class="c-cursor-ring" id="cursor-ring"></div>
+  <!-- Curseur personnalisé -->
+  <div class="custom-cursor" id="custom-cursor" aria-hidden="true"></div>
+  <!-- Aura ambiante du curseur (cercle flottant) -->
+  <div class="cursor-aura" id="cursor-aura" aria-hidden="true"></div>
+  <!-- Barre de progression au scroll -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
-  <!-- Scroll progress -->
-  <div class="scroll-bar" id="scroll-bar"></div>
+  <!-- ============================================================
+       HEADER FIXE
+  ============================================================ -->
+  <header class="site-header" id="site-header">
+    <nav class="nav-container">
+      <!-- Logo -->
+      <a href="#" class="logo" aria-label="HamriMed – strona główna">HamriMed</a>
 
-  <!-- ── HEADER ─────────────────────────────────────── -->
-  <header class="header" id="header">
-    <nav class="nav">
-      <a href="#" class="nav__logo">Hamri<span>Med</span></a>
-      <ul class="nav__links" id="nav-links">
+      <!-- Menu principal (desktop) -->
+      <ul class="nav-links" id="nav-links">
         <li><a href="#produkty">Produkty</a></li>
-        <li><a href="#zalety">Zalety</a></li>
+        <li><a href="#rozmiary">Rozmiary</a></li>
         <li><a href="#konsultantka">Konsultantka</a></li>
+        <li><a href="#aplikacja">Aplikacja</a></li>
         <li><a href="#kontakt">Kontakt</a></li>
       </ul>
-      <div class="nav__actions">
-        <a href="#produkty" class="btn btn--primary">Odkryj nakładki</a>
-        <button class="nav__hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
+
+      <!-- Sélecteur de langue -->
+      <div class="lang-switcher" id="lang-switcher">
+        <button class="lang-btn lang-active" data-lang="PL">PL</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn lang-inactive" data-lang="FR">FR</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn lang-inactive" data-lang="EN">EN</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn lang-inactive" data-lang="ES">ES</button>
       </div>
+
+      <!-- Bouton hamburger (mobile) -->
+      <button class="hamburger" id="hamburger" aria-label="Otwórz menu" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
     </nav>
   </header>
 
   <main>
 
-    <!-- ── SCROLL JOURNEY (pinned hero, 400vh) ────────────
-         scene stays sticky at top:0.
-         GSAP scrolls through 3 stages as user scrolls 400vh.
-    ─────────────────────────────────────────────────────── -->
-    <section class="journey" id="journey">
-      <div class="journey__scene" id="scene">
-
-        <!-- Gradient background that tints -->
-        <div class="journey__bg" id="journey-bg"></div>
-
-        <!-- Stacked product images (crossfade via GSAP) -->
-        <div class="journey__imgs" id="journey-imgs">
-          <img class="jimg jimg--a" id="jimg-a" src="assets/hero-product.jpg"   alt="Nakładka Maymom" />
-          <img class="jimg jimg--b" id="jimg-b" src="assets/exploded-view.jpg"  alt="Budowa nakładki" />
-          <img class="jimg jimg--c" id="jimg-c" src="assets/mom-pump.jpg"       alt="Mama z laktatorem" />
+    <!-- ============================================================
+         SECTION 1 — HERO
+    ============================================================ -->
+    <section class="hero-section" id="hero">
+      <div class="hero-content">
+        <span class="hero-badge hero-animate" style="--delay:0s">✦ Nakładki Maymom w Polsce</span>
+        <!-- Titre h1 : JS va splitter chaque mot en lettres individuelles -->
+        <h1 class="hero-title" id="hero-title" aria-label="Wygodne karmienie piersią z nakładkami Maymom">
+          <span class="hero-word">Wygodne</span>
+          <span class="hero-word">karmienie</span>
+          <span class="hero-word">piersią</span>
+          <span class="hero-word">z&nbsp;nakładkami</span>
+          <span class="hero-word">Maymom</span>
+        </h1>
+        <!-- Sous-titre : slide mot par mot depuis la gauche -->
+        <p class="hero-subtitle" id="hero-subtitle">Najwyższa jakość, kompatybilność z Medela i Spectra, wsparcie konsultantki laktacyjnej</p>
+        <!-- Boutons avec effet spring -->
+        <div class="hero-cta-group" id="hero-cta">
+          <a href="#produkty" class="btn btn-primary btn-spring" style="--spring-delay:1.2s">Odkryj nakładki</a>
+          <a href="#konsultantka" class="btn btn-outline btn-spring" style="--spring-delay:1.4s">Porozmawiaj z konsultantką</a>
         </div>
+      </div>
+      <div class="hero-image hero-animate" style="--delay:0.3s">
+        <!-- Image principale hero — hero-product.jpg -->
+        <div class="hero-img-wrapper">
+          <img
+            src="assets/hero-product.jpg"
+            alt="Nakładki Maymom – najwyższa jakość"
+            class="hero-img"
+          />
+          <!-- Overlay dégradé pour lisibilité du texte sur mobile -->
+          <div class="hero-img-overlay" aria-hidden="true"></div>
+        </div>
+      </div>
 
-        <!-- STAGE 0 — opening -->
-        <div class="jstage jstage--0" id="jstage-0">
-          <div class="jstage__inner">
-            <span class="eyebrow" id="s0-badge">✦ Nakładki Maymom w Polsce</span>
-            <h1 class="display" id="s0-title">
-              <span class="d-line" id="dl-1">Wygodne</span>
-              <span class="d-line" id="dl-2">karmienie</span>
-              <span class="d-line d-line--accent" id="dl-3">piersią.</span>
-            </h1>
-            <p class="hero-sub" id="s0-sub">Kompatybilne z Medela i Spectra · Wsparcie konsultantki</p>
-          </div>
-          <div class="scroll-cue" id="scroll-cue">
-            <div class="scroll-cue__dot"></div>
-            <span>Przewiń</span>
-          </div>
-        </div>
-
-        <!-- STAGE 1 — exploded view -->
-        <div class="jstage jstage--1" id="jstage-1">
-          <div class="jstage__left">
-            <span class="eyebrow">Budowa produktu</span>
-            <h2 class="headline">Każdy detal<br/>ma znaczenie.</h2>
-            <p class="body-text">Precyzyjnie zaprojektowane nakładki z miękkiego silikonu medycznego dla maksymalnego komfortu.</p>
-          </div>
-          <div class="jstage__pills" id="pills">
-            <div class="pill" data-i="0"><span class="pill__dot"></span>Miękki silikon</div>
-            <div class="pill" data-i="1"><span class="pill__dot"></span>Anatomiczny kształt</div>
-            <div class="pill" data-i="2"><span class="pill__dot"></span>Łatwa w czyszczeniu</div>
-            <div class="pill" data-i="3"><span class="pill__dot"></span>BPA free · FDA approved</div>
-          </div>
-        </div>
-
-        <!-- STAGE 2 — lifestyle -->
-        <div class="jstage jstage--2" id="jstage-2">
-          <div class="jstage__center">
-            <span class="eyebrow">Dla każdej mamy</span>
-            <h2 class="headline headline--light">Zaprojektowane<br/>z troską.</h2>
-            <a href="#produkty" class="btn btn--primary btn--lg">Sprawdź nakładki →</a>
-          </div>
-        </div>
-
-        <!-- Step dots -->
-        <div class="jdots" id="jdots">
-          <span class="jdot jdot--active" data-s="0"></span>
-          <span class="jdot" data-s="1"></span>
-          <span class="jdot" data-s="2"></span>
-        </div>
-
-      </div><!-- /scene -->
-    </section>
-
-    <!-- ── STATS ──────────────────────────────────────────── -->
-    <section class="stats" id="stats">
-      <div class="stats__grid">
-        <div class="stat fade-up">
-          <div class="stat__row">
-            <span class="stat__n" data-target="500">0</span>
-            <span class="stat__s">+</span>
-          </div>
-          <p>zadowolonych mam</p>
-        </div>
-        <div class="stat fade-up" style="--fd:.1s">
-          <div class="stat__row">
-            <span class="stat__n" data-target="98">0</span>
-            <span class="stat__s">%</span>
-          </div>
-          <p>poleca dalej</p>
-        </div>
-        <div class="stat fade-up" style="--fd:.2s">
-          <div class="stat__row">
-            <span class="stat__n" data-target="12">0</span>
-            <span class="stat__s"></span>
-          </div>
-          <p>rozmiarów nakładek</p>
-        </div>
-        <div class="stat fade-up" style="--fd:.3s">
-          <div class="stat__row">
-            <span class="stat__n" data-target="48">0</span>
-            <span class="stat__s">h</span>
-          </div>
-          <p>wysyłka w</p>
+      <!-- Indicateur de scroll bouncing -->
+      <div class="scroll-indicator" aria-hidden="true">
+        <span class="scroll-label">Przewiń w dół</span>
+        <div class="scroll-arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <polyline points="19 12 12 19 5 12"/>
+          </svg>
         </div>
       </div>
     </section>
 
-    <!-- ── PRODUCTS ───────────────────────────────────────── -->
-    <section class="products section" id="produkty">
-      <div class="section__head fade-up">
-        <span class="eyebrow">Nasze produkty</span>
-        <h2 class="section-title">Nakładki Maymom</h2>
-        <p class="section-sub">Kompatybilne z najpopularniejszymi laktatorsami w Polsce</p>
-      </div>
-      <div class="products__grid">
+    <!-- ============================================================
+         SECTION 2 — AVANTAGES "Dlaczego HamriMed?"
+    ============================================================ -->
+    <section class="advantages-section" id="advantages">
+      <div class="section-container">
+        <h2 class="section-title fade-in" data-num="01">Dlaczego HamriMed?</h2>
+        <p class="section-subtitle fade-in">Wybieramy razem z Tobą najlepsze rozwiązania dla komfortowego karmienia</p>
+        <div class="advantages-grid">
 
-        <article class="pcard fade-up">
-          <div class="pcard__img">
-            <img src="assets/hero-product.jpg" alt="Nakładka Classic" loading="lazy" />
-            <span class="pcard__tag">Bestseller</span>
-          </div>
-          <div class="pcard__body">
-            <p class="pcard__brand">Maymom</p>
-            <h3>Nakładka Classic</h3>
-            <p>Kompatybilna z Medela PersonalFit i Spectra S2. Rozmiary 17–36 mm.</p>
-            <div class="pcard__foot">
-              <strong>od 79 zł</strong>
-              <a href="#kontakt" class="btn btn--outline btn--sm">Zamów</a>
+          <!-- Colonne 1 : Qualité -->
+          <div class="advantage-card fade-in">
+            <div class="advantage-icon">
+              <!-- Icône étoile SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
             </div>
+            <h3 class="advantage-title">Najwyższa jakość</h3>
+            <p class="advantage-text">Certyfikowane nakładki Maymom klasy premium, wyprodukowane z bezpiecznych materiałów.</p>
           </div>
-        </article>
 
-        <article class="pcard pcard--hero fade-up" style="--fd:.12s">
-          <div class="pcard__img">
-            <img src="assets/flange-closeup.jpg" alt="Nakładka Comfort+" loading="lazy" />
-            <span class="pcard__tag pcard__tag--pink">Nowość</span>
-          </div>
-          <div class="pcard__body">
-            <p class="pcard__brand">Maymom</p>
-            <h3>Nakładka Comfort+</h3>
-            <p>Miękki elastyczny kołnierz zmniejsza ból i zwiększa wydajność o 30%.</p>
-            <div class="pcard__foot">
-              <strong>od 99 zł</strong>
-              <a href="#kontakt" class="btn btn--primary btn--sm">Zamów</a>
+          <!-- Colonne 2 : Compatibilité -->
+          <div class="advantage-card fade-in">
+            <div class="advantage-icon">
+              <!-- Icône compatible SVG (double cercle) -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="8" cy="12" r="5"/>
+                <circle cx="16" cy="12" r="5"/>
+              </svg>
             </div>
+            <h3 class="advantage-title">Medela &amp; Spectra</h3>
+            <p class="advantage-text">Pełna kompatybilność z najpopularniejszymi pompkami dostępnymi na polskim rynku.</p>
           </div>
-        </article>
 
-        <article class="pcard fade-up" style="--fd:.24s">
-          <div class="pcard__img">
-            <img src="assets/flanges-set.jpg" alt="Zestaw Starter" loading="lazy" />
-            <span class="pcard__tag">Zestaw</span>
-          </div>
-          <div class="pcard__body">
-            <p class="pcard__brand">Maymom</p>
-            <h3>Zestaw Starter</h3>
-            <p>4 nakładki w różnych rozmiarach. Idealny zestaw na start z odciąganiem.</p>
-            <div class="pcard__foot">
-              <strong>od 249 zł</strong>
-              <a href="#kontakt" class="btn btn--outline btn--sm">Zamów</a>
+          <!-- Colonne 3 : Consultante -->
+          <div class="advantage-card fade-in">
+            <div class="advantage-icon">
+              <!-- Icône personne SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
             </div>
+            <h3 class="advantage-title">Konsultantka laktacyjna</h3>
+            <p class="advantage-text">Indywidualne wsparcie specjalistki przez całą drogę karmienia piersią.</p>
           </div>
-        </article>
 
-      </div>
-    </section>
+          <!-- Colonne 4 : Application -->
+          <div class="advantage-card fade-in">
+            <div class="advantage-icon">
+              <!-- Icône mobile SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                <line x1="12" y1="18" x2="12.01" y2="18"/>
+              </svg>
+            </div>
+            <h3 class="advantage-title">Aplikacja mobilna</h3>
+            <p class="advantage-text">Dedykowana aplikacja dla położnych i specjalistów zdrowia kobiecego.</p>
+          </div>
 
-    <!-- ── HOW IT WORKS ───────────────────────────────────── -->
-    <section class="how section" id="zalety">
-      <div class="how__inner">
-        <div class="how__left">
-          <span class="eyebrow fade-up">Jak to działa</span>
-          <h2 class="section-title fade-up" style="--fd:.05s">Trzy kroki<br/>do komfortu.</h2>
-          <p class="section-sub fade-up" style="--fd:.1s">Prosty system, który zmienia codzienne odciąganie w przyjemność.</p>
         </div>
-        <div class="how__steps">
-          <div class="step fade-up">
-            <div class="step__num">01</div>
-            <div>
-              <h3>Dobierz rozmiar</h3>
-              <p>Skorzystaj z bezpłatnego przewodnika lub porozmawiaj z konsultantką laktacyjną.</p>
-            </div>
-          </div>
-          <div class="step fade-up" style="--fd:.1s">
-            <div class="step__num">02</div>
-            <div>
-              <h3>Zamów online</h3>
-              <p>Wysyłka w 48h. Bezpieczne płatności. Darmowy zwrot w ciągu 30 dni.</p>
-            </div>
-          </div>
-          <div class="step fade-up" style="--fd:.2s">
-            <div class="step__num">03</div>
-            <div>
-              <h3>Odciągaj wygodnie</h3>
-              <p>Poczuj różnicę od pierwszego użycia. Konsultantka zawsze do Twojej dyspozycji.</p>
-            </div>
-          </div>
+      </div>
+      <!-- Compteurs animés (data-target = valeur finale) -->
+      <div class="stats-row">
+        <div class="stat-item fade-in">
+          <span class="stat-number" data-target="500">0</span><span class="stat-suffix">+</span>
+          <span class="stat-label">Zadowolonych mam</span>
+        </div>
+        <div class="stat-item fade-in">
+          <span class="stat-number" data-target="98">0</span><span class="stat-suffix">%</span>
+          <span class="stat-label">Pozytywnych opinii</span>
+        </div>
+        <div class="stat-item fade-in">
+          <span class="stat-number" data-target="3">0</span><span class="stat-suffix"></span>
+          <span class="stat-label">Lata doświadczenia</span>
+        </div>
+        <div class="stat-item fade-in">
+          <span class="stat-number" data-target="2">0</span><span class="stat-suffix"></span>
+          <span class="stat-label">Rozmiary nakładek</span>
         </div>
       </div>
     </section>
+    <!-- Séparateur animé 1 -->
+    <div class="section-divider" aria-hidden="true"><span class="divider-line"></span></div>
 
-    <!-- ── CONSULTANT ─────────────────────────────────────── -->
-    <section class="consult section" id="konsultantka">
-      <div class="consult__inner">
-        <div class="consult__img fade-up">
-          <img src="assets/consultant.jpg" alt="Konsultantka laktacyjna" loading="lazy" />
-          <div class="consult__ring"></div>
+    <!-- ============================================================
+         SECTION 3 — PRODUITS "Nasze nakładki"
+    ============================================================ -->
+    <section class="products-section" id="produkty">
+      <div class="section-container">
+        <h2 class="section-title fade-in" data-num="02">Nasze nakładki</h2>
+        <p class="section-subtitle fade-in">Wybierz nakładkę dostosowaną do Twoich potrzeb</p>
+        <div class="products-grid">
+
+          <!-- Carte 1 — 21mm Medela -->
+          <article class="product-card slide-left" style="--delay:0.1s">
+            <div class="product-img-wrapper">
+              <img
+                src="assets/flange-closeup.jpg"
+                alt="Nakładka Maymom 21mm – zbliżenie"
+                class="product-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="product-info">
+              <span class="product-badge">Bestseller</span>
+              <h3 class="product-name">Nakładka Maymom 21mm</h3>
+              <p class="product-compat">Kompatybilna z Medela</p>
+              <div class="product-footer">
+                <span class="product-price">89 zł</span>
+                <a href="#kontakt" class="btn btn-sm btn-primary">Zobacz więcej</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Carte 2 — 24mm Medela + Spectra -->
+          <article class="product-card slide-left" style="--delay:0.2s">
+            <div class="product-img-wrapper">
+              <img
+                src="assets/flanges-set.jpg"
+                alt="Nakładka Maymom 24mm – zestaw"
+                class="product-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="product-info">
+              <span class="product-badge product-badge--blue">Popularny</span>
+              <h3 class="product-name">Nakładka Maymom 24mm</h3>
+              <p class="product-compat">Kompatybilna z Medela i Spectra</p>
+              <div class="product-footer">
+                <span class="product-price">89 zł</span>
+                <a href="#kontakt" class="btn btn-sm btn-primary">Zobacz więcej</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Carte 3 — Zestaw -->
+          <article class="product-card slide-left" style="--delay:0.3s">
+            <div class="product-img-wrapper">
+              <img
+                src="assets/exploded-view.jpg"
+                alt="Zestaw nakładek Maymom – widok rozłożony"
+                class="product-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="product-info">
+              <span class="product-badge product-badge--green">Zestaw</span>
+              <h3 class="product-name">Zestaw nakładek Maymom</h3>
+              <p class="product-compat">Rozmiary 21mm + 24mm</p>
+              <div class="product-footer">
+                <span class="product-price">159 zł</span>
+                <a href="#kontakt" class="btn btn-sm btn-primary">Zobacz więcej</a>
+              </div>
+            </div>
+          </article>
+
         </div>
-        <div class="consult__text fade-up" style="--fd:.15s">
-          <span class="eyebrow">Wsparcie eksperta</span>
-          <h2 class="section-title">Twoja osobista<br/>konsultantka.</h2>
-          <p class="body-text">Każda mama HamriMed ma dostęp do certyfikowanej konsultantki. Odpowiemy na każde pytanie — od doboru rozmiaru po techniki odciągania.</p>
-          <ul class="check-list">
-            <li>Bezpłatna konsultacja przy zakupie</li>
-            <li>Chat dostępny 7 dni w tygodniu</li>
-            <li>Certyfikowane doradczynie IBCLC</li>
+      </div>
+    </section>
+    <!-- Séparateur animé 2 -->
+    <div class="section-divider" aria-hidden="true"><span class="divider-line"></span></div>
+
+    <!-- ============================================================
+         SECTION 4 — GUIDE TAILLE "Jak dobrać rozmiar nakładki?"
+    ============================================================ -->
+    <section class="guide-section" id="rozmiary">
+      <div class="section-container guide-inner">
+        <div class="guide-text fade-in">
+          <h2 class="section-title">Jak dobrać rozmiar nakładki?</h2>
+          <p class="guide-description">
+            Dobranie właściwego rozmiaru nakładki jest kluczowe dla komfortu i skuteczności odciągania mleka.
+            Nieprawidłowy rozmiar może prowadzić do bólu lub negatywnie wpłynąć na laktację.
+            Skonsultuj się z naszą konsultantką, która pomoże Ci wybrać idealnie dopasowany rozmiar.
+          </p>
+          <a href="#kontakt" class="btn btn-primary">Dowiedz się więcej</a>
+        </div>
+        <div class="guide-visual fade-in">
+          <!-- Vue éclatée — parfaite pour le guide pédagogique -->
+          <div class="guide-img-wrapper">
+            <img
+              src="assets/exploded-view.jpg"
+              alt="Schemat doboru rozmiaru nakładki Maymom"
+              class="guide-img"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 5 — CONSULTANTE "Twoja konsultantka laktacyjna"
+    ============================================================ -->
+    <section class="consultant-section" id="konsultantka">
+      <div class="section-container consultant-inner fade-in">
+        <!-- Portrait rond Estera — consultant.jpg -->
+        <div class="consultant-avatar">
+          <img
+            src="assets/consultant.jpg"
+            alt="Estera – certyfikowana konsultantka laktacyjna"
+            class="consultant-portrait"
+            loading="lazy"
+          />
+        </div>
+        <div class="consultant-text">
+          <h2 class="consultant-name">Estera</h2>
+          <p class="consultant-title">Certyfikowana konsultantka laktacyjna</p>
+          <p class="consultant-bio">
+            Jestem certyfikowaną konsultantką laktacyjną z wieloletnim doświadczeniem w pracy z kobietami karmiącymi.
+            Pomagam mamom przezwyciężać trudności związane z karmieniem piersią i dobierać odpowiednie akcesoria.
+            Każda mama i każde dziecko są wyjątkowe – podejmuję się każdej sytuacji indywidualnie.
+          </p>
+          <a href="#kontakt" class="btn btn-primary">Umów konsultację</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 6 — APP MOBILE "Aplikacja dla położnych"
+    ============================================================ -->
+    <section class="app-section" id="aplikacja">
+      <div class="section-container app-inner">
+        <div class="app-mockup fade-in">
+          <!-- Mockup application mobile — app-mockup.jpg -->
+          <div class="app-img-wrapper">
+            <img
+              src="assets/app-mockup.jpg"
+              alt="Aplikacja HamriMed dla położnych – mockup"
+              class="app-img"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <div class="app-text fade-in">
+          <h2 class="section-title">Aplikacja dla położnych</h2>
+          <p class="app-description">Narzędzie stworzone z myślą o specjalistach zdrowia kobiecego – sprawne, intuicyjne i zawsze pod ręką.</p>
+          <ul class="app-features">
+            <li class="app-feature-item">
+              <span class="feature-dot"></span>
+              Baza danych nakładek z kartami technicznymi i rozmiarówką
+            </li>
+            <li class="app-feature-item">
+              <span class="feature-dot"></span>
+              Szybkie porównanie kompatybilności z pompkami Medela i Spectra
+            </li>
+            <li class="app-feature-item">
+              <span class="feature-dot"></span>
+              Kontakt z konsultantką i obsługą klienta bezpośrednio z aplikacji
+            </li>
           </ul>
-          <a href="#kontakt" class="btn btn--primary">Umów konsultację</a>
+          <a href="#kontakt" class="btn btn-primary">Dowiedz się więcej</a>
         </div>
       </div>
     </section>
 
-    <!-- ── APP ────────────────────────────────────────────── -->
-    <section class="app section" id="aplikacja">
-      <div class="app__inner">
-        <div class="app__text fade-up">
-          <span class="eyebrow">Wkrótce dostępna</span>
-          <h2 class="section-title">Aplikacja<br/>HamriMed.</h2>
-          <p class="body-text">Śledź czas odciągania, dawkowanie mleka i postępy laktacji. Połącz z Medela lub Spectra.</p>
-          <ul class="app__feat">
-            <li>📊 Dziennik laktacji</li>
-            <li>⏱ Minutnik odciągania</li>
-            <li>👩‍⚕️ Czat z konsultantką</li>
-            <li>📦 Śledzenie zamówień</li>
-          </ul>
-          <div class="app__badges">
-            <div class="badge-pill">App Store <small>Wkrótce</small></div>
-            <div class="badge-pill">Google Play <small>Wkrótce</small></div>
-          </div>
-        </div>
-        <div class="app__img fade-up" style="--fd:.2s">
-          <img src="assets/app-mockup.jpg" alt="Aplikacja HamriMed" loading="lazy" />
+    <!-- ============================================================
+         SECTION 7 — TÉMOIGNAGES "Opinie naszych klientek"
+    ============================================================ -->
+    <section class="reviews-section" id="opinie">
+      <!-- Fond subtil — mom-breastfeeding.jpg à opacity 0.08 -->
+      <div class="reviews-bg" aria-hidden="true">
+        <img src="assets/mom-breastfeeding.jpg" alt="" class="reviews-bg-img" loading="lazy" />
+      </div>
+      <div class="section-container" style="position:relative;z-index:1;">
+        <h2 class="section-title fade-in" data-num="03">Opinie naszych klientek</h2>
+        <p class="section-subtitle fade-in">Co mówią mamy, które nam zaufały</p>
+        <div class="reviews-grid">
+
+          <!-- Témoignage 1 — Agnieszka (flip depuis le bas) -->
+          <article class="review-card flip-card" style="--flip-delay:0s">
+            <div class="review-stars" aria-label="Ocena: 5 gwiazdek">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <blockquote class="review-text">
+              „Nakładki Maymom całkowicie zmieniły moje doświadczenie z odciąganiem mleka. Wreszcie bez bólu i z pełnym komfortem. Polecam każdej mamie!"
+            </blockquote>
+            <footer class="review-author">
+              <div class="review-avatar">A</div>
+              <div>
+                <strong class="review-name">Agnieszka</strong>
+                <span class="review-label">Mama 7-miesięcznego Filipa</span>
+              </div>
+            </footer>
+          </article>
+
+          <!-- Témoignage 2 — Karolina -->
+          <article class="review-card flip-card" style="--flip-delay:0.15s">
+            <div class="review-stars" aria-label="Ocena: 5 gwiazdek">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <blockquote class="review-text">
+              „Konsultacja z Esterą była nieoceniona. Pomogła mi dobrać idealny rozmiar i teraz karmienie piersią jest przyjemnością, a nie wyzwaniem."
+            </blockquote>
+            <footer class="review-author">
+              <div class="review-avatar">K</div>
+              <div>
+                <strong class="review-name">Karolina</strong>
+                <span class="review-label">Mama bliźniaczek Zosi i Mai</span>
+              </div>
+            </footer>
+          </article>
+
+          <!-- Témoignage 3 — Marta -->
+          <article class="review-card flip-card" style="--flip-delay:0.3s">
+            <div class="review-stars" aria-label="Ocena: 5 gwiazdek">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <blockquote class="review-text">
+              „Jako położna polecam HamriMed wszystkim swoim pacjentkom. Jakość produktów i poziom obsługi klienta są po prostu doskonałe."
+            </blockquote>
+            <footer class="review-author">
+              <div class="review-avatar">M</div>
+              <div>
+                <strong class="review-name">Marta</strong>
+                <span class="review-label">Położna, Warszawa</span>
+              </div>
+            </footer>
+          </article>
+
         </div>
       </div>
     </section>
 
-    <!-- ── TESTIMONIALS ───────────────────────────────────── -->
-    <section class="testi section" id="opinie">
-      <div class="section__head fade-up">
-        <span class="eyebrow">Opinie mam</span>
-        <h2 class="section-title">Co mówią<br/>nasze mamy.</h2>
-      </div>
-      <div class="testi__grid">
-        <div class="tcard fade-up">
-          <p class="tcard__stars">★★★★★</p>
-          <blockquote>"Po 3 tygodniach bólu podczas odciągania, nakładki HamriMed zmieniły wszystko. Nareszcie karmię bez dyskomfortu."</blockquote>
-          <div class="tcard__author">
-            <img src="assets/mom-breastfeeding.jpg" alt="" loading="lazy" />
-            <div>
-              <strong>Karolina M.</strong>
-              <span>mama 4-miesięcznego Jasia</span>
+    <!-- ============================================================
+         SECTION 8 — FAQ "Często zadawane pytania"
+    ============================================================ -->
+    <section class="faq-section" id="kontakt">
+      <div class="section-container">
+        <h2 class="section-title fade-in">Często zadawane pytania</h2>
+        <p class="section-subtitle fade-in">Wszystko, co chcesz wiedzieć o nakładkach Maymom</p>
+        <div class="faq-list fade-in">
+
+          <!-- Question 1 -->
+          <div class="faq-item" id="faq-1">
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
+              Czy nakładki Maymom są kompatybilne z moją pompką?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq-answer-1" role="region" hidden>
+              <p>Nakładki Maymom są kompatybilne z najpopularniejszymi pompkami elektrycznymi dostępnymi w Polsce: Medela (Freestyle Flex, Swing Maxi, Symphony) i Spectra (S1, S2, S9). Jeśli masz wątpliwości, nasza konsultantka pomoże Ci potwierdzić kompatybilność z Twoim urządzeniem.</p>
             </div>
           </div>
-        </div>
-        <div class="tcard tcard--dark fade-up" style="--fd:.1s">
-          <p class="tcard__stars">★★★★★</p>
-          <blockquote>"Konsultantka pomogła dobrać idealny rozmiar. Nakładka Comfort+ to najlepszy zakup dla karmiącej mamy."</blockquote>
-          <div class="tcard__author">
-            <img src="assets/mom-pump.jpg" alt="" loading="lazy" />
-            <div>
-              <strong>Agnieszka W.</strong>
-              <span>mama 2 dzieci</span>
+
+          <!-- Question 2 -->
+          <div class="faq-item" id="faq-2">
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
+              Jak dobrać odpowiedni rozmiar nakładki Maymom?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq-answer-2" role="region" hidden>
+              <p>Prawidłowy rozmiar nakładki dobiera się na podstawie średnicy brodawki sutkowej. Należy zmierzyć brodawkę (nie otoczkę) i wybrać nakładkę o 1-3 mm większą. Oferujemy rozmiary 21mm i 24mm. Skontaktuj się z naszą konsultantką laktacyjną, która pomoże Ci dokonać właściwego wyboru.</p>
             </div>
           </div>
-        </div>
-        <div class="tcard fade-up" style="--fd:.2s">
-          <p class="tcard__stars">★★★★★</p>
-          <blockquote>"Nakładki pasują idealnie do mojego Spectry. Szybka dostawa i świetna obsługa klienta. Polecam każdej mamie!"</blockquote>
-          <div class="tcard__author">
-            <img src="assets/consultant.jpg" alt="" loading="lazy" />
-            <div>
-              <strong>Marta K.</strong>
-              <span>mama 7-miesięcznej Zosi</span>
+
+          <!-- Question 3 -->
+          <div class="faq-item" id="faq-3">
+            <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
+              Jak dbać o nakładki Maymom i jak często je wymieniać?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq-answer-3" role="region" hidden>
+              <p>Nakładki Maymom należy myć ręcznie lub w zmywarce po każdym użyciu i sterylizować regularnie. Zalecamy wymianę nakładek co 2-3 miesiące lub gdy zauważysz oznaki zużycia (pęknięcia, przebarwienia). Regularna wymiana gwarantuje higienę i maksymalną skuteczność odciągania.</p>
             </div>
           </div>
+
         </div>
       </div>
     </section>
 
-    <!-- ── CTA ────────────────────────────────────────────── -->
-    <section class="cta section" id="kontakt">
-      <div class="cta__inner fade-up">
-        <span class="eyebrow">Zrób pierwszy krok</span>
-        <h2 class="display display--sm">Zacznij karmić<br/>bez bólu.</h2>
-        <p class="body-text">Dołącz do setek mam, które odkryły komfort nakładek Maymom.<br/>Bezpłatna konsultacja w cenie zakupu.</p>
-        <div class="cta__btns">
-          <a href="mailto:hello@hamrimed.pl" class="btn btn--primary btn--lg">Napisz do nas</a>
-          <a href="#produkty" class="btn btn--ghost btn--lg">Zobacz nakładki</a>
-        </div>
-      </div>
-    </section>
+  </main><!-- /main -->
 
-  </main>
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="site-footer" id="footer">
+    <div class="footer-container">
 
-  <!-- ── FOOTER ─────────────────────────────────────────── -->
-  <footer class="footer">
-    <div class="footer__top">
-      <div class="footer__brand">
-        <a href="#" class="nav__logo">Hamri<span>Med</span></a>
-        <p>Nakładki Maymom dla polskich mam.<br/>Dostawa 48h · Zwrot 30 dni.</p>
+      <!-- Colonne logo + tagline -->
+      <div class="footer-brand">
+        <a href="#" class="logo footer-logo">HamriMed</a>
+        <p class="footer-tagline">Twoje wsparcie w karmieniu piersią – krok po kroku, razem z Tobą.</p>
       </div>
-      <div class="footer__cols">
-        <div>
-          <h4>Produkty</h4>
-          <a href="#produkty">Nakładka Classic</a>
-          <a href="#produkty">Nakładka Comfort+</a>
-          <a href="#produkty">Zestaw Starter</a>
-        </div>
-        <div>
-          <h4>Wsparcie</h4>
-          <a href="#konsultantka">Konsultantka</a>
-          <a href="#zalety">Poradnik rozmiarów</a>
-          <a href="#kontakt">Kontakt</a>
-        </div>
-        <div>
-          <h4>Firma</h4>
-          <a href="#">O nas</a>
-          <a href="#">Polityka prywatności</a>
-          <a href="#">Regulamin</a>
-        </div>
+
+      <!-- Liens de navigation footer -->
+      <nav class="footer-nav" aria-label="Nawigacja stopki">
+        <ul>
+          <li><a href="#produkty">Produkty</a></li>
+          <li><a href="#rozmiary">Rozmiary</a></li>
+          <li><a href="#konsultantka">Konsultantka</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+          <li><a href="#">Polityka prywatności</a></li>
+        </ul>
+      </nav>
+
+      <!-- Sélecteur de langue bas de page -->
+      <div class="footer-lang" id="footer-lang-switcher">
+        <span class="footer-lang-label">Język:</span>
+        <button class="lang-btn lang-active" data-lang="PL">PL</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn lang-inactive" data-lang="FR">FR</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn lang-inactive" data-lang="EN">EN</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn lang-inactive" data-lang="ES">ES</button>
       </div>
+
     </div>
-    <div class="footer__bottom">
-      <p id="footer-copy">© 2026 HamriMed. Wszelkie prawa zastrzeżone.</p>
-      <div class="footer__lang">
-        <button class="lang-btn" data-lang="PL">PL</button>
-        <button class="lang-btn" data-lang="EN">EN</button>
-        <button class="lang-btn" data-lang="FR">FR</button>
-      </div>
+
+    <!-- Copyright -->
+    <div class="footer-bottom">
+      <p id="footer-copyright" data-text="© 2026 HamriMed. Wszelkie prawa zastrzeżone."></p>
     </div>
   </footer>
-
-  <!-- GSAP + ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <!-- Lenis smooth scroll -->
-  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
 
   <script src="main.js"></script>
 </body>
